@@ -8,17 +8,22 @@ function createNode(key, value, nextNode = null) {
 
 function createLinkedList() {
     let headNode = null;
-    let tailNode;
+    let listSize = 0;
 
     function append(key, value) {
         let newNode = createNode(key, value);
         if (headNode === null) {
             headNode = newNode;
-            tailNode = headNode;
         } else {
-            tailNode.nextNode = newNode;
-            tailNode = tailNode.nextNode;
+            let temp = headNode;
+            while (temp.nextNode) {
+                temp = temp.nextNode;
+            }
+
+            temp.nextNode = newNode;
         }
+
+        listSize++;
     }
 
     function update(key, value) {
@@ -46,9 +51,23 @@ function createLinkedList() {
         return result;
     }
 
+    function remove(index) {
+        if (index == 0) {
+            headNode = null;
+            return;
+        }
+
+        let temp = headNode;
+        for (let i = 0; i < index - 1; i++) {
+            temp = temp.nextNode;
+        }
+
+        temp.nextNode = temp.nextNode.nextNode;
+    }
+
     const toString = () => {
         if (headNode === null) {
-            return "";
+            return "HEAD IS NULL";
         }
 
         const result = [];
@@ -63,7 +82,7 @@ function createLinkedList() {
         return result.join(" -> ");
     };
 
-    return { append, update, serialize, toString };
+    return { append, update, serialize, remove, toString };
 }
 
 export default createLinkedList;

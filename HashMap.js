@@ -102,6 +102,30 @@ function createHashMap() {
         return false;
     }
 
+    function remove(key) {
+        const index = hash(key);
+        if (index < 0 || index >= capacity) {
+            throw new Error("Trying to access index out of bounds");
+        }
+
+        if (buckets[index] === undefined) {
+            return false;
+        }
+
+        const serialized = buckets[index].serialize();
+        let idx = 0;
+        for (let [nodeKey, nodeValue] of serialized) {
+            if (key === nodeKey) {
+                buckets[index].remove(idx);
+                entries--;
+                return true;
+            }
+            idx++;
+        }
+
+        return false;
+    }
+
     function toString() {
         for (let bucket of buckets) {
             if (bucket) {
@@ -114,7 +138,7 @@ function createHashMap() {
         console.log(`Capacity: ${capacity}`);
     }
 
-    return { set, get, has, toString };
+    return { set, get, has, remove, toString };
 }
 
 export default createHashMap;
