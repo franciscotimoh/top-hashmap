@@ -126,6 +126,57 @@ function createHashMap() {
         return false;
     }
 
+    function length() {
+        return entries;
+    }
+
+    function clear() {
+        buckets = [];
+        entries = 0;
+    }
+
+    function keys() {
+        const result = [];
+        for (let node of buckets) {
+            if (node) {
+                const serialized = node.serialize();
+                for (let [key, value] of serialized) {
+                    result.push(key);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    function values() {
+        const result = [];
+        for (let node of buckets) {
+            if (node) {
+                const serialized = node.serialize();
+                for (let [key, value] of serialized) {
+                    result.push(value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    function myEntries() {
+        const result = [];
+        for (let node of buckets) {
+            if (node) {
+                const serialized = node.serialize();
+                for (let pair of serialized) {
+                    result.push(pair);
+                }
+            }
+        }
+
+        return result;
+    }
+
     function toString() {
         for (let bucket of buckets) {
             if (bucket) {
@@ -138,7 +189,18 @@ function createHashMap() {
         console.log(`Capacity: ${capacity}`);
     }
 
-    return { set, get, has, remove, toString };
+    return {
+        set,
+        get,
+        has,
+        remove,
+        length,
+        clear,
+        keys,
+        values,
+        myEntries,
+        toString,
+    };
 }
 
 export default createHashMap;

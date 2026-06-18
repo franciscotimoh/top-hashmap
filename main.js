@@ -15,8 +15,6 @@ test.set("carrot", "orange");
 // test.set("lion", "golden");
 test.set("moon", "silver");
 
-test.toString();
-
 // let res = test.get("moon");
 // console.log(`Should say silver: ${res}`);
 // res = test.get("shite");
@@ -27,9 +25,6 @@ test.toString();
 // has = test.has("shite");
 // console.log(`Should say false: ${has}`);
 
-let res = test.remove("moon");
-console.log(res);
-test.toString();
-console.log("==================");
 test.set("moon", "gold");
-test.toString();
+
+console.log(test.myEntries());
